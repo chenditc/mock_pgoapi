@@ -147,19 +147,28 @@ class PGoApi(object):
     def set_api_endpoint(self, endpoint):
         return
 
+    def get_sub_cells(self, cellid, level=1):
+        sub_cells = []
+        start = CellId(id_=cellid).child_begin()
+        end = CellId(id_=cellid).child_end()
+        while ( start.id() < end.id() ):
+            if level == 1:
+                sub_cells.append(start.id())
+            else:
+                sub_cells += self.get_sub_cells(start.id(), level-1)
+            start = start.next()
+        return sub_cells
+
+
+
     def generate_pokemon_by_cellid_timestamp(self, cellid, timestamp, max_pokemon):
         """ Return a list of pokemon in that cellid """
         # Use cellid|timestamp as random seed
         random.seed(str(cellid) + str(timestamp / 60))
 
         # Get all sub cellids
-        start = CellId(id_=cellid).child_begin()
-        end = CellId(id_=cellid).child_end()
-        sub_cells = []
-        while ( start.id() < end.id() ):
-            sub_cells.append(start.id())
-            start = start.next()
-       
+        sub_cells = self.get_sub_cells(cellid, 2)
+
         # Random sample from sub cellids
         poke_count = random.randrange(0, max_pokemon + 1)
         poke_cells = random.sample(sub_cells, poke_count)
@@ -207,6 +216,7 @@ class PGoApi(object):
             }
 
             # Check if current cell have pokemon
+            cell_id_level15 = (cell_id_long / 536870912 + 1) * 536870912 
             if cell_id_long in cell_pokemons_map:
                 for pokemon in cell_pokemons_map[cell_id_long]:
                     # For each pokemon, check its distance to user
