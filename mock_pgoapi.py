@@ -13,6 +13,19 @@ from mock_api_response_template import *
 
 EARTH_RADIUS = 6371000  # radius of Earth in meters
 
+class AuthProvider():
+    def __init__(self):
+        self._access_token = "123"
+        self._refresh_token = "123"
+
+    def set_ticket(self, ticket):
+        return
+
+    def get_ticket(self):
+        return
+
+
+
 class Pokemon(object):
     def __init__(self, pokemon_id, longitude, latitude, expire, spawn_point_id, encounter_id):
         self.pokemon_id = pokemon_id
@@ -103,18 +116,35 @@ class PGoApi(object):
         self.longitude = 0
         self.height = 0
 
+        self._auth_provider = AuthProvider() 
+
+        self.set_api_endpoint("pgorelease.nianticlabs.com/plfe")
+
+        self._signature_lib = None
+
+        self._session = None
+
+        self.device_info = None 
+
     def set_position(self, latitude, longitude, height):
         self.longitude = longitude
         self.latitude = latitude
         self.height = height
 
+
+    def get_api_endpoint(self):
+        return ""
+
     def activate_signature(self, shared_library):
         return
 
-    def set_authentication(self, provider, username, password):
+    def set_authentication(self, provider, username, password, proxy_config=None):
         return
 
     def set_proxy(self, proxy):
+        return
+
+    def set_api_endpoint(self, endpoint):
         return
 
     def generate_pokemon_by_cellid_timestamp(self, cellid, timestamp, max_pokemon):
