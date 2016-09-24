@@ -216,7 +216,7 @@ class PGoApi(object):
             }
 
             # Check if current cell have pokemon
-            cell_id_level15 = (cell_id_long / 536870912 + 1) * 536870912 
+            cell_id_level15 = (cell_id_long / 536870912) * 536870912 
             if cell_id_level15 in cell_pokemons_map:
                 for pokemon in cell_pokemons_map[cell_id_level15]:
                     # For each pokemon, check its distance to user
