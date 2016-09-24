@@ -97,8 +97,6 @@ def get_surrounding_cell_ids(lat, long, radius=1000):
     cells = coverer.get_covering(region)
     return sorted([x.id() for x in cells])
 
-
-
 class PGoApi(object):
     def __init__(self):
         self.latitude = 0
@@ -116,7 +114,7 @@ class PGoApi(object):
     def set_authentication(self, provider, username, password):
         return
 
-    def set_proxy(proxy)
+    def set_proxy(proxy):
         return
 
     def generate_pokemon_by_cellid_timestamp(self, cellid, timestamp, max_pokemon):
@@ -198,6 +196,9 @@ class PGoApi(object):
 
         response = GET_MAP_OBJECT_RESPONSE_TEMPLATE 
         response["responses"]["GET_MAP_OBJECTS"]["map_cells"] = map_cells
+
+        # Sleep random second to simulate network delay
+        time.sleep(random.randrange(0,8))
 
         return response
 
