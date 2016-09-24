@@ -114,7 +114,7 @@ class PGoApi(object):
     def set_authentication(self, provider, username, password):
         return
 
-    def set_proxy(proxy):
+    def set_proxy(self, proxy):
         return
 
     def generate_pokemon_by_cellid_timestamp(self, cellid, timestamp, max_pokemon):
